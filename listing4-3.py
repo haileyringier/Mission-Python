@@ -90,7 +90,7 @@ def generate_map():
     room_map=[[side_edge] * room_width]
 
     for y in range(room_height - 2):
-        room_map.append([side_edge] + [floor_type]*(room_width - 2) +[side_edge])
+        room_map.append([side_edge] + [floor_type]*(room_width - 2) + [side_edge])
     
     room_map.append([bottom_edge] * room_width)
 
@@ -118,5 +118,41 @@ def generate_map():
         room_below = GAME_MAP[current_room + MAP_WIDTH]
         if room_below[3]:
             room_map[room_height - 1][middle_column] = floor_type
-            room_map[room_height - 1][middle_column - 1] = floor_type
             room_map[room_height - 1][middle_column + 1] = floor_type
+            room_map[room_height - 1][middle_column - 1] = floor_type
+
+
+def draw():
+    global room_height, room_width, room_map
+    generate_map()
+    screen.clear()
+
+    for y in range(room_height):
+        for x in range(room_width):
+            image_to_draw = DEMO_OBJECTS[room_map[y][x]]
+            screen.blit(image_to_draw,
+            (top_left_x + (x * 30), 
+            top_left_y + (y * 30) - image_to_draw.get_height()))
+
+def movement():
+    global current_room
+    old_room = current_room
+
+    if keyboard.left:
+        current_room -= 1
+    if keyboard.right:
+        current_room += 1
+    if keyboard.up:
+        current_room -= MAP_WIDTH
+    if keyboard.down:
+        current_room += MAP_WIDTH
+
+    if current_room > 50:
+        current_room = 50
+    if current_room < 1:
+        current_room = 1
+
+    if current_room != old_room:
+        print("Entering room:" + str(current_room))
+
+clock.schedule_interval(movement, 0.1)
