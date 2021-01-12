@@ -279,8 +279,9 @@ for room_coordinate in range(0, 13):
 del scenery[25][-1]
 del scenery[21][-1]
 
-
-## end of scenery section
+############################
+## end of scenery section ##
+############################
 
 GAME_MAP = [
     ["Room 0 - where unused objects are kept", 0, 0, False, False]
@@ -411,6 +412,11 @@ def draw():
                   screen.blit(image_to_draw, 
                   (top_left_x + (x * 30), 
                   top_left_y + (y * 30) - image_to_draw.get_height()))
+        if player_y == y:
+            image_to_draw = PLAYER[player_direction][player_frame]
+            screen.blit(image_to_draw,
+                        (top_left_x + (player_x*30)+(player_offset_x*30),
+                        top_left_y + (player_y*30)+(playeroffset_y*30) - image_to_draw.get_height()))
 
 # No longer need this function to change rooms see astronaut
 # def movement():
