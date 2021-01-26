@@ -450,6 +450,49 @@ def game_loop():
             player_y += 1
             player_direction = "down"
             player_frame = 1
+     
+     #check for exiting the room
+    if player_x == room_width:
+        # clock.unschedule(hazard_move)
+        current_room += 1
+        generate_map()
+        player_x = 0
+        player_y = int(room_height / 2)
+        player_frame = 0
+        #start_room()
+        return 
+
+    if player_x == -1:
+        # clock.unschedule(hazard_move)
+        current_room -= 1
+        generate_map()
+        player_x = room_width - 1
+        player_y = int(room_height / 2)
+        player_frame = 0
+        #start_room()
+        return
+     
+    if player_y == room_height:
+        #clock.unschedule(hazard_move)
+        current_room += MAP_WIDTH 
+        generate_map()
+        player_y = 0
+        player_x = int(room_width / 2)
+        player_frame = 0
+        #start_room()
+        return
+     
+    if player_y == -1:
+        #clock.unschedule(hazard_move)
+        current_room -= MAP_WIDTH
+        generate_map()
+        player_y = room_height - 1
+        player_x = int(room_width / 2)
+        player_frame = 0
+        #start_room()
+        return
+
+
     
     # If the player is standing somewhere they shouldn't, move them back.
     if room_map[player_y][player_x] not in items_player_may_stand_on:  
